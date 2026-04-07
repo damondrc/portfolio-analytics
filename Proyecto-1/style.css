@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  color: #1a1a1a;
+  background: #f9f9f9;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0f62fe, #0043ce);
+  color: white;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.hero h1 {
+  font-size: 2.4rem;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  max-width: 540px;
+  margin: 0 auto 32px;
+  opacity: 0.9;
+}
+
+#btn-cta {
+  background: white;
+  color: #0f62fe;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#btn-cta:hover {
+  background: #e8f0ff;
+}
+
+/* FEATURES */
+.features {
+  padding: 60px 20px;
+  text-align: center;
+  background: white;
+}
+
+.features h2 {
+  font-size: 1.8rem;
+  margin-bottom: 36px;
+}
+
+.cards {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: #f0f4ff;
+  border-radius: 10px;
+  padding: 28px;
+  max-width: 260px;
+  text-align: left;
+}
+
+.card h3 {
+  margin-bottom: 10px;
+}
+
+/* FORMULARIO */
+.form-section {
+  padding: 60px 20px;
+  text-align: center;
+  background: #f9f9f9;
+}
+
+.form-section h2 {
+  font-size: 1.6rem;
+  margin-bottom: 28px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+input {
+  padding: 12px 18px;
+  width: 100%;
+  max-width: 380px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+#btn-submit {
+  background: #0f62fe;
+  color: white;
+  border: none;
+  padding: 13px 32px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#btn-submit:hover {
+  background: #0043ce;
+}
+
+/* CONTENIDO */
+.content {
+  padding: 60px 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+}
+
+.content h2 {
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+.content p {
+  margin-bottom: 16px;
+  line-height: 1.7;
+  color: #444;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.85rem;
+  color: #888;
+  background: #1a1a1a;
+  color: #aaa;
+}
