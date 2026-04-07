@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portafolio — Digital Analytics</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; color: #1a1a1a; }
+    header { background: linear-gradient(135deg, #0f62fe, #0043ce); color: white; padding: 60px 20px; text-align: center; }
+    header h1 { font-size: 2rem; margin-bottom: 12px; }
+    header p { font-size: 1.1rem; opacity: 0.9; }
+    .projects { max-width: 800px; margin: 40px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 24px; }
+    .card { background: white; border-radius: 10px; padding: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+    .card h2 { font-size: 1.3rem; margin-bottom: 10px; color: #0f62fe; }
+    .card p { color: #555; line-height: 1.6; margin-bottom: 16px; }
+    .tag { display: inline-block; background: #e8f0ff; color: #0043ce; border-radius: 4px; padding: 4px 10px; font-size: 0.8rem; margin-right: 6px; margin-bottom: 6px; }
+    .btn { display: inline-block; margin-top: 12px; padding: 10px 22px; background: #0f62fe; color: white; border-radius: 6px; text-decoration: none; font-size: 0.9rem; }
+    .btn:hover { background: #0043ce; }
+    footer { text-align: center; padding: 30px; color: #888; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Digital Analytics Portfolio</h1>
+    <p>GTM · GA4 · Event Tracking · Debugging</p>
+  </header>
+
+  <div class="projects">
+
+    <div class="card">
+      <h2>Proyecto 1 — GTM + Event Tracking</h2>
+      <p>Implementación de Google Tag Manager en un sitio web simulado con tracking de clics, scroll y envío de formulario.</p>
+      <span class="tag">Google Tag Manager</span>
+      <span class="tag">Event Tracking</span>
+      <span class="tag">HTML/CSS</span>
+      <br/>
+      <a class="btn" href="Proyecto-1/index.html">Ver sitio</a>
+    </div>
+
+    <div class="card">
+      <h2>Proyecto 2 — GA4 + Conversiones + Funnel</h2>
+      <p>Configuración de Google Analytics 4 conectado vía GTM, definición de eventos clave y construcción de un funnel de conversión.</p>
+      <span class="tag">Google Analytics 4</span>
+      <span class="tag">Conversiones</span>
+      <span class="tag">Funnel Analysis</span>
+      <br/>
+      <a class="btn" href="Proyecto-2 Imágenes/">Ver evidencia</a>
+    </div>
+
+    <div class="card">
+      <h2>Proyecto 3 — Debugging documentado</h2>
+      <p>Documentación de errores reales encontrados durante la implementación, con diagnóstico y solución de cada uno.</p>
+      <span class="tag">Debugging</span>
+      <span class="tag">GTM Preview Mode</span>
+      <span class="tag">GA4</span>
+      <br/>
+      <a class="btn" href="Proyecto-3/README.md">Ver documentación</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Portafolio de Analytics — damondrc</p>
+  </footer>
+
+</body>
+</html>
