@@ -2,7 +2,8 @@
 
 Hands-on web tracking implementation on a simulated site, deployed with GitHub Pages.
 
-> 🌐 **Live site:** https://damondrc.github.io/portfolio-analytics
+> 🌐 **Live site:** https://damondrc.github.io/portfolio-analytics ·
+> 🎯 **Instrumented demo (GTM + GA4):** [TechFlow](https://damondrc.github.io/portfolio-analytics/Proyecto-1/index.html)
 
 ## What's inside
 
