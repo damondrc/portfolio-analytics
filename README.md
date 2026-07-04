@@ -2,7 +2,7 @@
 
 Hands-on web tracking implementation on a simulated site, deployed with GitHub Pages.
 
-> 🌐 **Live site:** https://damondrc.github.io/portfolio-analytics ·
+> 🌐 **Live site (instrumented with GTM + GA4):** https://damondrc.github.io/portfolio-analytics
 > 🎯 **Instrumented demo (GTM + GA4):** [TechFlow](https://damondrc.github.io/portfolio-analytics/Proyecto-1/index.html)
 
 ## What's inside
@@ -15,6 +15,7 @@ Google Tag Manager implementation with three custom events wired through the dat
 | CTA clicks | Click on tracked buttons/links |
 | Scroll depth | User scrolls 75% of the page |
 | Form submission | Contact form submit |
+| `click_proyecto_1/2/3` (landing) | Click on each project navigation card |
 
 **[2 — GA4 + Conversions + Funnel](https://damondrc.github.io/portfolio-analytics/Proyecto-2/)**
 Google Analytics 4 property connected via GTM: key events marked as conversions and a
@@ -23,6 +24,12 @@ conversion funnel built on top of the tracked events.
 **[3 — Documented debugging](https://damondrc.github.io/portfolio-analytics/Proyecto-3/README.md)**
 Real errors found during implementation, each with diagnosis and fix, validated with
 GTM Preview Mode and GA4 DebugView.
+
+The GTM container is installed **site-wide**, and the landing page has its own
+tracked events: `click_proyecto_1`, `click_proyecto_2` and `click_proyecto_3`
+fire in GA4 when a visitor opens each section. Navigation from the portfolio
+landing into each project is itself measured — the portfolio is its own little
+conversion funnel.
 
 ## Stack
 
