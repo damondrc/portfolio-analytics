@@ -100,6 +100,39 @@ El proceso de debugging requiere separar la capa de **recolección**
 
 ---
 
+## Bug #4 — Doble instalación: gtag.js directo + GA4 vía GTM
+
+### Síntoma
+Durante la auditoría previa a la expansión del sitio (v1.0 del Measurement
+Plan) se detectó que las páginas cargaban **dos** instalaciones de GA4 en
+paralelo:
+1. El snippet directo de `gtag.js` con `gtag('config', 'G-HV1S1BRJ8S')`
+2. El tag de configuración de GA4 dentro del contenedor GTM
+
+### Diagnóstico
+Cada instalación envía su propio `page_view` al cargar la página. En
+DevTools → Network (filtro `collect`) se observan dos hits de `page_view`
+por carga, lo que infla page_views, sesiones cortas y distorsiona
+métricas de engagement. Es uno de los errores más comunes al migrar de
+gtag.js "hardcodeado" a una gestión centralizada en GTM: la instalación
+antigua queda olvidada en el código.
+
+### Solución
+1. Se removió el snippet directo de `gtag.js` de todas las páginas.
+2. GA4 quedó servido **exclusivamente** vía GTM (una sola fuente de verdad).
+3. Se conservó únicamente la definición de la función `gtag()` inline,
+   necesaria para los comandos de Consent Mode (que viajan por el dataLayer
+   y no requieren cargar la librería gtag.js).
+4. Verificación: un solo hit `page_view` por carga en Network → `collect`.
+
+### Aprendizaje
+Antes de cualquier expansión de tracking, auditar **cuántas instalaciones
+activas** tiene la propiedad. La regla profesional: un solo punto de
+entrada (GTM) y el Measurement ID definido en una sola variable del
+contenedor. Todo lo demás es deuda técnica de medición.
+
+---
+
 ## Herramienta principal de debugging: GTM Preview Mode
 
 ![GTM Preview Mode](preview-mode.png)
