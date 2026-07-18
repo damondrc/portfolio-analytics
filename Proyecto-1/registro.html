@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechFlow — Crea tu cuenta</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Consent Mode v2: defaults ANTES de GTM -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NHRCHKWS');</script>
+  <!-- End Google Tag Manager -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NHRCHKWS"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <nav class="tf-nav">
+    <a class="tf-logo" href="index.html">TechFlow</a>
+    <div class="tf-links">
+      <a href="index.html">Inicio</a>
+      <a href="precios.html">Precios</a>
+    </div>
+  </nav>
+
+  <section class="hero hero-sm">
+    <h1>Crea tu cuenta</h1>
+    <p>Plan seleccionado: <strong id="plan-label">Pro</strong> · 30 días gratis, sin tarjeta.</p>
+  </section>
+
+  <section class="form-section signup-flow">
+    <div class="steps-indicator">
+      <span class="step-dot active" data-step="1">1. Tus datos</span>
+      <span class="step-dot" data-step="2">2. Tu equipo</span>
+    </div>
+
+    <!-- Paso 1 -->
+    <form id="reg-step-1" class="reg-step">
+      <input type="text" id="reg-nombre" placeholder="Tu nombre" required />
+      <input type="email" id="reg-email" placeholder="Tu correo de trabajo" required />
+      <button type="submit">Continuar</button>
+    </form>
+
+    <!-- Paso 2 -->
+    <form id="reg-step-2" class="reg-step" hidden>
+      <input type="text" id="reg-empresa" placeholder="Nombre de tu empresa" required />
+      <select id="reg-tamano" required>
+        <option value="" disabled selected>Tamaño del equipo</option>
+        <option value="1-5">1–5 personas</option>
+        <option value="6-20">6–20 personas</option>
+        <option value="21+">21+ personas</option>
+      </select>
+      <button type="submit" id="btn-crear-cuenta">Crear cuenta</button>
+    </form>
+
+    <p class="form-note">Demo de portafolio: no se guarda ni se envía ningún dato personal.
+    El tracking registra únicamente el plan elegido (sin PII).</p>
+  </section>
+
+  <footer>
+    <p>© 2026 TechFlow — Proyecto de portafolio de analytics</p>
+  </footer>
+
+  <script src="js/tracking.js"></script>
+  <script src="../js/consent.js"></script>
+  <script>
+    // begin_checkout al cargar (lee ?plan= y valida)
+    var planKey = TFTracking.beginCheckout();
+    var names = { starter: 'Starter', pro: 'Pro', business: 'Business' };
+    document.getElementById('plan-label').textContent = names[planKey] || 'Pro';
+
+    // Paso 1 → Paso 2
+    document.getElementById('reg-step-1').addEventListener('submit', function (e) {
+      e.preventDefault();
+      this.hidden = true;
+      document.getElementById('reg-step-2').hidden = false;
+      document.querySelector('.step-dot[data-step="2"]').classList.add('active');
+    });
+
+    // Paso 2 → sign_up → gracias
+    document.getElementById('reg-step-2').addEventListener('submit', function (e) {
+      e.preventDefault();
+      TFTracking.signUp(planKey);
+      var tid = TFTracking.newTransactionId();
+      setTimeout(function () {
+        window.location.href = 'gracias.html?plan=' + encodeURIComponent(planKey) +
+          '&tid=' + encodeURIComponent(tid);
+      }, 150);
+    });
+  </script>
+</body>
+</html>
