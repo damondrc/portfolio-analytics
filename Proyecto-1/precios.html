@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechFlow — Precios</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Consent Mode v2: defaults ANTES de GTM -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NHRCHKWS');</script>
+  <!-- End Google Tag Manager -->
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NHRCHKWS"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <nav class="tf-nav">
+    <a class="tf-logo" href="index.html">TechFlow</a>
+    <div class="tf-links">
+      <a href="index.html">Inicio</a>
+      <a href="precios.html" class="active">Precios</a>
+      <a href="registro.html?plan=pro" class="tf-nav-cta">Empieza gratis</a>
+    </div>
+  </nav>
+
+  <section class="hero hero-sm">
+    <h1>Planes simples, sin sorpresas</h1>
+    <p>Elige el plan que mejor se ajuste a tu equipo. Todos incluyen 30 días de prueba gratis.</p>
+  </section>
+
+  <section class="pricing">
+    <div class="plan" data-plan="starter">
+      <h3>Starter</h3>
+      <p class="price">$0<span>/mes</span></p>
+      <ul>
+        <li>Hasta 3 usuarios</li>
+        <li>2 tableros</li>
+        <li>Reportes básicos</li>
+      </ul>
+      <button class="plan-cta" data-plan="starter">Elegir plan</button>
+    </div>
+
+    <div class="plan plan-featured" data-plan="pro">
+      <span class="plan-badge">Más popular</span>
+      <h3>Pro</h3>
+      <p class="price">$12<span>/usuario/mes</span></p>
+      <ul>
+        <li>Usuarios ilimitados</li>
+        <li>Tableros ilimitados</li>
+        <li>Reportes en tiempo real</li>
+        <li>Integraciones</li>
+      </ul>
+      <button class="plan-cta" data-plan="pro">Elegir plan</button>
+    </div>
+
+    <div class="plan" data-plan="business">
+      <h3>Business</h3>
+      <p class="price">$29<span>/usuario/mes</span></p>
+      <ul>
+        <li>Todo lo de Pro</li>
+        <li>SSO y permisos avanzados</li>
+        <li>Soporte prioritario</li>
+        <li>SLA garantizado</li>
+      </ul>
+      <button class="plan-cta" data-plan="business">Elegir plan</button>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 TechFlow — Proyecto de portafolio de analytics</p>
+  </footer>
+
+  <script src="js/tracking.js"></script>
+  <script src="../js/consent.js"></script>
+  <script>
+    // view_item_list al cargar la página de precios
+    TFTracking.viewPlans();
+
+    // select_item + navegación al registro
+    document.querySelectorAll('.plan-cta').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var plan = btn.getAttribute('data-plan');
+        TFTracking.selectPlan(plan);
+        // pequeño delay para asegurar el push antes de navegar
+        setTimeout(function () {
+          window.location.href = 'registro.html?plan=' + encodeURIComponent(plan);
+        }, 150);
+      });
+    });
+  </script>
+</body>
+</html>

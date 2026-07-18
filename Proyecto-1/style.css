@@ -147,3 +147,77 @@ footer {
   background: #1a1a1a;
   color: #aaa;
 }
+/* ================= NAV (v1.0) ================= */
+.tf-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: white;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.tf-logo { font-weight: 700; font-size: 1.15rem; color: #0f62fe; text-decoration: none; }
+.tf-links { display: flex; align-items: center; gap: 20px; }
+.tf-links a { color: #444; text-decoration: none; font-size: 0.95rem; }
+.tf-links a.active { color: #0f62fe; font-weight: 600; }
+.tf-links a.tf-nav-cta {
+  background: #0f62fe; color: white; padding: 8px 18px;
+  border-radius: 6px; font-weight: 600;
+}
+.tf-links a.tf-nav-cta:hover { background: #0043ce; }
+
+/* ================= HERO variante ================= */
+.hero-sm { padding: 50px 20px; }
+.btn-light {
+  display: inline-block; background: white; color: #0f62fe;
+  padding: 12px 28px; border-radius: 6px; font-weight: 600;
+  text-decoration: none; margin-top: 8px;
+}
+
+/* ================= PRICING ================= */
+.pricing {
+  display: flex; flex-wrap: wrap; gap: 24px; justify-content: center;
+  padding: 60px 20px; background: white;
+}
+.plan {
+  position: relative; background: #f9f9f9; border: 1px solid #e4e4e4;
+  border-radius: 10px; padding: 32px 28px; width: 280px; text-align: center;
+}
+.plan-featured { border: 2px solid #0f62fe; background: #f4f8ff; }
+.plan-badge {
+  position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+  background: #0f62fe; color: white; font-size: 0.75rem; font-weight: 600;
+  padding: 4px 12px; border-radius: 999px;
+}
+.plan h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.plan .price { font-size: 2rem; font-weight: 700; color: #0f62fe; margin-bottom: 18px; }
+.plan .price span { font-size: 0.85rem; color: #777; font-weight: 400; }
+.plan ul { list-style: none; margin-bottom: 24px; }
+.plan ul li { padding: 6px 0; color: #555; font-size: 0.92rem; }
+.plan-cta {
+  background: #0f62fe; color: white; border: none; padding: 12px 28px;
+  border-radius: 6px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+}
+.plan-cta:hover { background: #0043ce; }
+
+/* ================= SIGNUP FLOW ================= */
+.signup-flow { max-width: 460px; margin: 0 auto; }
+.steps-indicator {
+  display: flex; justify-content: center; gap: 24px; margin-bottom: 24px;
+}
+.step-dot { color: #999; font-size: 0.9rem; }
+.step-dot.active { color: #0f62fe; font-weight: 600; }
+.reg-step { display: flex; flex-direction: column; gap: 14px; }
+.reg-step[hidden] { display: none; }
+.reg-step input, .reg-step select {
+  padding: 12px 14px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem;
+}
+.reg-step button {
+  background: #0f62fe; color: white; border: none; padding: 13px;
+  border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer;
+}
+.reg-step button:hover { background: #0043ce; }
+.form-note { margin-top: 18px; font-size: 0.8rem; color: #888; text-align: center; }

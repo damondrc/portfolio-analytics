@@ -5,28 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TechFlow — Gestión de proyectos simple</title>
   <link rel="stylesheet" href="style.css" />
-</head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HV1S1BRJ8S"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-HV1S1BRJ8S');
-</script>
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NHRCHKWS');</script>
-<!-- End Google Tag Manager -->
+  <!-- Consent Mode v2: defaults ANTES de GTM -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied',
+      wait_for_update: 500
+    });
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NHRCHKWS');</script>
+  <!-- End Google Tag Manager -->
+  <!-- NOTA: el snippet directo de gtag.js fue removido intencionalmente.
+       GA4 se sirve exclusivamente vía GTM para evitar page_views duplicados.
+       Ver Proyecto-3, Bug #4. -->
+</head>
 <body>
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NHRCHKWS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+  <!-- End Google Tag Manager (noscript) -->
+
+  <nav class="tf-nav">
+    <a class="tf-logo" href="index.html">TechFlow</a>
+    <div class="tf-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="precios.html">Precios</a>
+      <a href="precios.html" class="tf-nav-cta">Empieza gratis</a>
+    </div>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">
@@ -54,7 +71,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <!-- FORMULARIO -->
+  <!-- FORMULARIO (legacy: dispara form_submit, se mantiene por continuidad) -->
   <section class="form-section">
     <h2>Regístrate y pruébalo 30 días gratis</h2>
     <form id="signup-form">
@@ -78,8 +95,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 
   <footer>
-    <p>© 2025 TechFlow — Proyecto de portafolio de analytics</p>
+    <p>© 2026 TechFlow — Proyecto de portafolio de analytics</p>
   </footer>
 
+  <script src="../js/consent.js"></script>
+  <script>
+    // El CTA principal conserva su id (#btn-cta) para el trigger legacy de GTM
+    // y ahora inicia el journey hacia la página de precios.
+    document.getElementById('btn-cta').addEventListener('click', function () {
+      setTimeout(function () { window.location.href = 'precios.html'; }, 150);
+    });
+  </script>
 </body>
 </html>
