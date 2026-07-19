@@ -1,0 +1,569 @@
+{
+    "exportFormatVersion": 2,
+    "exportTime": "2026-07-17 19:56:26",
+    "containerVersion": {
+        "path": "accounts/6222966634/containers/248487919/versions/0",
+        "accountId": "6222966634",
+        "containerId": "248487919",
+        "containerVersionId": "0",
+        "container": {
+            "path": "accounts/6222966634/containers/248487919",
+            "accountId": "6222966634",
+            "containerId": "248487919",
+            "name": "techflow-demo",
+            "publicId": "GTM-NHRCHKWS",
+            "usageContext": [
+                "WEB"
+            ],
+            "fingerprint": "1775489592371",
+            "tagManagerUrl": "https://tagmanager.google.com/#/container/accounts/6222966634/containers/248487919/workspaces?apiLink=container",
+            "features": {
+                "supportUserPermissions": true,
+                "supportEnvironments": true,
+                "supportWorkspaces": true,
+                "supportGtagConfigs": false,
+                "supportBuiltInVariables": true,
+                "supportClients": false,
+                "supportFolders": true,
+                "supportTags": true,
+                "supportTemplates": true,
+                "supportTriggers": true,
+                "supportVariables": true,
+                "supportVersions": true,
+                "supportZones": true,
+                "supportTransformations": false
+            },
+            "tagIds": [
+                "GTM-NHRCHKWS"
+            ]
+        },
+        "tag": [
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "5",
+                "name": "Tag - Click CTA",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_cta"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783173865887",
+                "firingTriggerId": [
+                    "4"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "7",
+                "name": "Tag - Form Submit",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "form_submit"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783173875428",
+                "firingTriggerId": [
+                    "6"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "9",
+                "name": "Tag - Scroll 50",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "scroll_50"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783173886382",
+                "firingTriggerId": [
+                    "8"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "11",
+                "name": "Tag - GA4 Config",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "Tag - GA4 Config"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783173880757",
+                "firingTriggerId": [
+                    "2147479553"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "12",
+                "name": "Etiqueta de Google G-HV1S1BRJ8S",
+                "type": "googtag",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "tagId",
+                        "value": "G-HV1S1BRJ8S"
+                    }
+                ],
+                "fingerprint": "1783173514829",
+                "firingTriggerId": [
+                    "2147479573"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "17",
+                "name": "Tag - Click Proyecto 1",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_proyecto_1"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783174253389",
+                "firingTriggerId": [
+                    "14"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "18",
+                "name": "Tag - Click Proyecto 2",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_proyecto_2"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783174279445",
+                "firingTriggerId": [
+                    "15"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "tagId": "19",
+                "name": "Tag - Click Proyecto 3",
+                "type": "gaawe",
+                "parameter": [
+                    {
+                        "type": "BOOLEAN",
+                        "key": "sendEcommerceData",
+                        "value": "false"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "eventName",
+                        "value": "click_proyecto_3"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "measurementIdOverride",
+                        "value": "{{GA4 measurement ID}}"
+                    }
+                ],
+                "fingerprint": "1783174297425",
+                "firingTriggerId": [
+                    "16"
+                ],
+                "tagFiringOption": "ONCE_PER_EVENT",
+                "monitoringMetadata": {
+                    "type": "MAP"
+                },
+                "consentSettings": {
+                    "consentStatus": "NOT_SET"
+                }
+            }
+        ],
+        "trigger": [
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "triggerId": "4",
+                "name": "Trigger - Clic CTA",
+                "type": "CLICK",
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click ID}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "btn-cta"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1775491816444"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "triggerId": "6",
+                "name": "Trigger - Form Submit",
+                "type": "FORM_SUBMISSION",
+                "filter": [
+                    {
+                        "type": "EQUALS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Form ID}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "signup-form"
+                            }
+                        ]
+                    }
+                ],
+                "waitForTags": {
+                    "type": "TEMPLATE"
+                },
+                "checkValidation": {
+                    "type": "TEMPLATE"
+                },
+                "waitForTagsTimeout": {
+                    "type": "TEMPLATE",
+                    "value": "2000"
+                },
+                "uniqueTriggerId": {
+                    "type": "TEMPLATE"
+                },
+                "fingerprint": "1775494074927"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "triggerId": "8",
+                "name": "Trigger - Scroll 50",
+                "type": "SCROLL_DEPTH",
+                "fingerprint": "1775494291998",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "verticalThresholdUnits",
+                        "value": "PERCENT"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "verticalThresholdsPercent",
+                        "value": "50"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "verticalThresholdOn",
+                        "value": "true"
+                    },
+                    {
+                        "type": "TEMPLATE",
+                        "key": "triggerStartOption",
+                        "value": "WINDOW_LOAD"
+                    },
+                    {
+                        "type": "BOOLEAN",
+                        "key": "horizontalThresholdOn",
+                        "value": "false"
+                    }
+                ]
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "triggerId": "14",
+                "name": "Trigger - Proyecto 1",
+                "type": "CLICK",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click Element}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "Proyecto-1"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1783174152771"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "triggerId": "15",
+                "name": "Trigger - Proyecto 2",
+                "type": "CLICK",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click Element}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "Proyecto-2"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1783174145054"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "triggerId": "16",
+                "name": "Trigger - Proyecto 3",
+                "type": "CLICK",
+                "filter": [
+                    {
+                        "type": "CONTAINS",
+                        "parameter": [
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg0",
+                                "value": "{{Click Element}}"
+                            },
+                            {
+                                "type": "TEMPLATE",
+                                "key": "arg1",
+                                "value": "Proyecto-3"
+                            }
+                        ]
+                    }
+                ],
+                "fingerprint": "1783174186734"
+            }
+        ],
+        "variable": [
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "variableId": "13",
+                "name": "GA4 measurement ID",
+                "type": "c",
+                "parameter": [
+                    {
+                        "type": "TEMPLATE",
+                        "key": "value",
+                        "value": "G-HV1S1BRJ8S"
+                    }
+                ],
+                "fingerprint": "1783173759464"
+            }
+        ],
+        "builtInVariable": [
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "PAGE_URL",
+                "name": "Page URL"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "PAGE_HOSTNAME",
+                "name": "Page Hostname"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "PAGE_PATH",
+                "name": "Page Path"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "REFERRER",
+                "name": "Referrer"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "EVENT",
+                "name": "Event"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "CLICK_ELEMENT",
+                "name": "Click Element"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "CLICK_CLASSES",
+                "name": "Click Classes"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "CLICK_ID",
+                "name": "Click ID"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "CLICK_URL",
+                "name": "Click URL"
+            },
+            {
+                "accountId": "6222966634",
+                "containerId": "248487919",
+                "type": "FORM_ID",
+                "name": "Form ID"
+            }
+        ],
+        "fingerprint": "1784318186037",
+        "tagManagerUrl": "https://tagmanager.google.com/#/versions/accounts/6222966634/containers/248487919/versions/0?apiLink=version"
+    }
+}
