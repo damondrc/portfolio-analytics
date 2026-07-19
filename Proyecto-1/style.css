@@ -221,3 +221,162 @@ footer {
 }
 .reg-step button:hover { background: #0043ce; }
 .form-note { margin-top: 18px; font-size: 0.8rem; color: #888; text-align: center; }
+
+/* ================= LAYOUT v1.1 =================
+   Footer siempre al fondo + páginas con altura real para que el
+   trigger Scroll 50 de GTM no dispare en el load. */
+html { scroll-behavior: smooth; }
+body { display: flex; flex-direction: column; min-height: 100vh; }
+footer { margin-top: auto; }
+
+/* ================= HERO GRID ================= */
+.hero-grid {
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; flex-wrap: wrap; text-align: left;
+  max-width: 1060px; margin: 0 auto;
+}
+.hero-copy { max-width: 480px; }
+.hero-copy p { margin: 0 0 32px; }
+.hero-art { width: min(440px, 90vw); }
+.hero-art svg, .split-art svg {
+  width: 100%; height: auto; display: block;
+}
+.hero-art svg { filter: drop-shadow(0 14px 30px rgba(0, 20, 60, 0.30)); }
+
+/* ================= LOGOS STRIP ================= */
+.logos { padding: 38px 20px; background: white; text-align: center; border-bottom: 1px solid #eef1f6; }
+.logos > p {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em;
+  color: #98a2b3; margin-bottom: 18px; font-weight: 600;
+}
+.logos-row {
+  display: flex; gap: 40px; flex-wrap: wrap; justify-content: center;
+  color: #667085; font-weight: 700; font-size: 1.05rem; opacity: 0.75;
+}
+
+/* ================= SPLIT (texto + ilustración) ================= */
+.split {
+  display: flex; gap: 56px; align-items: center; justify-content: center;
+  flex-wrap: wrap; padding: 76px 20px;
+}
+.split.alt { background: white; }
+.split-art { width: min(420px, 90vw); }
+.split-copy { max-width: 460px; }
+.split-copy h2 { font-size: 1.7rem; margin-bottom: 14px; }
+.split-copy > p { color: #555; line-height: 1.7; margin-bottom: 12px; }
+.split-copy ul { margin: 14px 0 0 20px; color: #444; line-height: 2; }
+
+/* ================= STATS BAND ================= */
+.stats {
+  background: linear-gradient(135deg, #0f62fe, #0043ce); color: white;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 56px; padding: 56px 20px; text-align: center;
+}
+.stat b { display: block; font-size: 2.1rem; margin-bottom: 4px; }
+.stat span { opacity: 0.85; font-size: 0.9rem; }
+
+/* ================= STEPS ================= */
+.steps { padding: 76px 20px; background: white; }
+.steps h2 { text-align: center; font-size: 1.8rem; margin-bottom: 12px; }
+.steps .steps-sub { text-align: center; color: #667085; margin-bottom: 42px; }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px; max-width: 1020px; margin: 0 auto;
+}
+.step-card { background: #f7f9ff; border: 1px solid #e6ecfb; border-radius: 10px; padding: 26px 24px; }
+.step-card b {
+  display: flex; width: 34px; height: 34px; border-radius: 50%;
+  background: #0f62fe; color: white; align-items: center; justify-content: center;
+  margin-bottom: 14px; font-size: 0.95rem;
+}
+.step-card h3 { font-size: 1.02rem; margin-bottom: 8px; }
+.step-card p { color: #555; font-size: 0.92rem; line-height: 1.65; }
+
+/* ================= TESTIMONIALS ================= */
+.testimonials { padding: 76px 20px; text-align: center; }
+.testimonials h2 { font-size: 1.8rem; margin-bottom: 40px; }
+.quotes { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; max-width: 1020px; margin: 0 auto; }
+.quote {
+  background: white; border: 1px solid #ececec; border-radius: 10px;
+  padding: 28px 26px; max-width: 300px; text-align: left;
+  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.05);
+}
+.quote > p { color: #444; line-height: 1.65; font-size: 0.95rem; margin-bottom: 18px; }
+.quote-author { display: flex; gap: 12px; align-items: center; }
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%; flex: none;
+  background: #e8f0ff; color: #0f62fe; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+}
+.quote-author b { font-size: 0.9rem; display: block; }
+.quote-author span { font-size: 0.8rem; color: #888; }
+
+/* ================= FAQ ================= */
+.faq { padding: 76px 20px; background: white; }
+.faq h2 { text-align: center; font-size: 1.8rem; margin-bottom: 34px; }
+.faq-list { max-width: 720px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid #ececec; padding: 18px 4px; }
+.faq summary { cursor: pointer; font-weight: 600; color: #1a1a1a; }
+.faq details p { margin-top: 12px; color: #555; line-height: 1.7; }
+
+/* ================= CTA BAND ================= */
+.cta-band {
+  background: linear-gradient(135deg, #0f62fe, #0043ce);
+  color: white; text-align: center; padding: 72px 20px;
+}
+.cta-band h2 { font-size: 1.8rem; margin-bottom: 12px; }
+.cta-band p { opacity: 0.9; margin-bottom: 28px; }
+
+/* ================= COMPARE TABLE ================= */
+.compare { padding: 76px 20px; }
+.compare h2 { text-align: center; font-size: 1.8rem; margin-bottom: 36px; }
+.compare-wrap { max-width: 860px; margin: 0 auto; overflow-x: auto; }
+.compare-table {
+  width: 100%; border-collapse: collapse; background: white;
+  border-radius: 10px; overflow: hidden; box-shadow: 0 2px 12px rgba(16, 24, 40, 0.06);
+  min-width: 560px;
+}
+.compare-table th, .compare-table td { padding: 14px 18px; text-align: center; font-size: 0.92rem; }
+.compare-table th { background: #f4f8ff; color: #1a1a1a; }
+.compare-table th:first-child, .compare-table td:first-child { text-align: left; color: #444; }
+.compare-table tr + tr td { border-top: 1px solid #f0f0f0; }
+.compare-table .yes { color: #12b76a; font-weight: 700; }
+.compare-table .no { color: #d0d5dd; }
+
+/* ================= TRUST / SECURITY ================= */
+.trust-cards {
+  display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+  max-width: 1020px; margin: 0 auto;
+}
+.trust-card {
+  background: white; border: 1px solid #ececec; border-radius: 10px;
+  padding: 26px 24px; max-width: 300px; text-align: left;
+}
+.trust-card svg { width: 40px; height: 40px; margin-bottom: 14px; }
+.trust-card h3 { font-size: 1.02rem; margin-bottom: 8px; }
+.trust-card p { color: #555; font-size: 0.92rem; line-height: 1.65; }
+.trust { padding: 76px 20px; }
+.trust h2 { text-align: center; font-size: 1.8rem; margin-bottom: 40px; }
+
+/* ================= NEXT STEPS (gracias) ================= */
+.next-steps { padding: 76px 20px; background: white; }
+.next-steps h2 { text-align: center; font-size: 1.8rem; margin-bottom: 40px; }
+
+/* ================= FOOTER v1.1 ================= */
+.tf-footer { background: #101828; color: #98a2b3; padding: 56px 20px 28px; text-align: left; }
+.tf-footer-grid {
+  display: flex; gap: 56px; flex-wrap: wrap; justify-content: center;
+  max-width: 1000px; margin: 0 auto 36px;
+}
+.tf-footer .fcol { min-width: 150px; }
+.tf-footer .flogo { color: white; font-weight: 700; font-size: 1.15rem; display: block; margin-bottom: 12px; }
+.tf-footer .fdesc { max-width: 240px; font-size: 0.88rem; line-height: 1.65; }
+.tf-footer h4 { color: white; font-size: 0.92rem; margin-bottom: 14px; }
+.tf-footer ul { list-style: none; }
+.tf-footer li { margin-bottom: 9px; font-size: 0.88rem; }
+.tf-footer a { color: #98a2b3; text-decoration: none; }
+.tf-footer a:hover { color: white; }
+.tf-footer .fnote {
+  text-align: center; border-top: 1px solid #243041;
+  padding-top: 22px; font-size: 0.8rem; color: #667085;
+}

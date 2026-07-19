@@ -18,6 +18,21 @@
     .btn { display: inline-block; margin-top: 12px; padding: 10px 22px; background: #0f62fe; color: white; border-radius: 6px; text-decoration: none; font-size: 0.9rem; }
     .btn:hover { background: #0043ce; }
     footer { text-align: center; padding: 30px; color: #888; font-size: 0.85rem; }
+    /* v1.1: layout + secciones nuevas */
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    footer { margin-top: auto; }
+    .section { max-width: 800px; margin: 0 auto; padding: 10px 20px 40px; }
+    .section h2 { font-size: 1.35rem; margin-bottom: 18px; text-align: center; }
+    .section > p { color: #555; line-height: 1.7; text-align: center; max-width: 640px; margin: 0 auto 26px; }
+    .method { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .method .m-card { background: white; border-radius: 10px; padding: 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+    .method .m-card b { display: flex; width: 30px; height: 30px; border-radius: 50%; background: #0f62fe; color: white; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 0.85rem; }
+    .method .m-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .method .m-card p { color: #555; font-size: 0.9rem; line-height: 1.6; }
+    .journey-art { max-width: 720px; margin: 0 auto; }
+    .journey-art svg { width: 100%; height: auto; display: block; }
+    .stack { text-align: center; }
+    .stack .tag { margin: 0 5px 10px; }
   </style>
   <!-- Consent Mode v2: defaults ANTES de GTM.
        El snippet directo de gtag.js fue removido: GA4 se sirve solo vía GTM
@@ -83,6 +98,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a class="btn" href="Proyecto-3/README.md">Ver documentación</a>
     </div>
 
+  </div>
+
+  <!-- ENFOQUE DE MEDICIÓN -->
+  <div class="section">
+    <h2>Enfoque de medición</h2>
+    <p>Cada implementación de este portafolio sigue el mismo ciclo de trabajo que usaría en un equipo real: diseñar antes de etiquetar, etiquetar con gobernanza y validar antes de publicar.</p>
+    <div class="method">
+      <div class="m-card"><b>1</b><h3>Diseño</h3><p>Measurement plan primero: objetivos de negocio → KPIs → diccionario de eventos y parámetros. El documento vive en el repo como fuente de verdad.</p></div>
+      <div class="m-card"><b>2</b><h3>Implementación</h3><p>dataLayer con esquema ecommerce recomendado de GA4, Consent Mode v2 y convenciones de naming en GTM, con el contenedor versionado como código.</p></div>
+      <div class="m-card"><b>3</b><h3>QA y debugging</h3><p>Preview Mode, Tag Assistant y DevTools en cada cambio. Los bugs encontrados se documentan con diagnóstico y solución (ver Proyecto 3).</p></div>
+    </div>
+  </div>
+
+  <!-- JOURNEY MEDIDO -->
+  <div class="section">
+    <h2>El journey que se mide en la demo</h2>
+    <p>TechFlow, el sitio simulado del Proyecto 1, cubre un recorrido completo de conversión SaaS con eventos ecommerce de GA4 en cada etapa.</p>
+    <div class="journey-art" aria-hidden="true">
+      <svg viewBox="0 0 720 150" xmlns="http://www.w3.org/2000/svg" role="img">
+        <rect x="10" y="35" width="150" height="58" rx="10" fill="white" stroke="#dbe7ff" stroke-width="2"/>
+        <text x="85" y="60" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Home</text>
+        <text x="85" y="80" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" fill="#0f62fe">page_view · CTA</text>
+        <path d="M162 64 h24" stroke="#98a2b3" stroke-width="2" marker-end="none"/><path d="M181 58 l8 6 l-8 6" fill="none" stroke="#98a2b3" stroke-width="2"/>
+        <rect x="192" y="35" width="150" height="58" rx="10" fill="white" stroke="#dbe7ff" stroke-width="2"/>
+        <text x="267" y="60" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Precios</text>
+        <text x="267" y="80" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" fill="#0f62fe">view_item_list · select_item</text>
+        <path d="M344 64 h24" stroke="#98a2b3" stroke-width="2"/><path d="M363 58 l8 6 l-8 6" fill="none" stroke="#98a2b3" stroke-width="2"/>
+        <rect x="374" y="35" width="150" height="58" rx="10" fill="white" stroke="#dbe7ff" stroke-width="2"/>
+        <text x="449" y="60" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#1a1a1a">Registro</text>
+        <text x="449" y="80" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" fill="#0f62fe">begin_checkout · sign_up</text>
+        <path d="M526 64 h24" stroke="#98a2b3" stroke-width="2"/><path d="M545 58 l8 6 l-8 6" fill="none" stroke="#98a2b3" stroke-width="2"/>
+        <rect x="556" y="35" width="150" height="58" rx="10" fill="#e8f0ff" stroke="#0f62fe" stroke-width="2"/>
+        <text x="631" y="60" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="14" font-weight="600" fill="#0043ce">Gracias</text>
+        <text x="631" y="80" text-anchor="middle" font-family="Segoe UI, sans-serif" font-size="11" fill="#0f62fe">purchase · generate_lead</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- STACK -->
+  <div class="section stack">
+    <h2>Stack y prácticas</h2>
+    <span class="tag">Google Tag Manager</span>
+    <span class="tag">Google Analytics 4</span>
+    <span class="tag">GA4 Ecommerce (dataLayer)</span>
+    <span class="tag">Consent Mode v2</span>
+    <span class="tag">Measurement Plan</span>
+    <span class="tag">Gobernanza GTM</span>
+    <span class="tag">GA4 Data API</span>
+    <span class="tag">Debugging / QA</span>
+    <span class="tag">HTML · CSS · JS</span>
   </div>
 
   <footer>
