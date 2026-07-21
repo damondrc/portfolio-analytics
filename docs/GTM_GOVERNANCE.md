@@ -7,16 +7,16 @@ container shared by a team would be governed.
 
 Pattern: `{Type} - {Tool} - {Description}`
 
-| Asset | Prefix examples |
+| Asset | Naming used in this container |
 |---|---|
-| Tags | `GA4 - Config`, `GA4 - Event - select_item`, `GA4 - Event - purchase` |
-| Triggers | `CE - select_item` (Custom Event), `Click - btn-cta`, `PV - gracias` |
-| Variables | `DLV - ecommerce.items`, `DLV - plan_id`, `Const - GA4 Measurement ID` |
+| Tags | `Tag - GA4 Config`, `Tag - select_item`, `Tag - purchase` |
+| Triggers | `CE - select_item` (Custom Event), `Trigger - Clic CTA`, `Trigger - Scroll 50` |
+| Variables | `GA4 measurement ID` (constant), `DLV - plan_id`, `DLV - value` |
 
 Rules:
 - One tag per GA4 event. No "multi-purpose" tags.
-- The GA4 Measurement ID lives in **one** Constant variable (`Const - GA4
-  Measurement ID`) referenced by every tag. Changing property = one edit.
+- The GA4 Measurement ID lives in **one** constant variable
+  (`GA4 measurement ID`) referenced by every tag. Changing property = one edit.
 - Folders: `01 Config`, `02 Events - Legacy`, `03 Events - Ecommerce`, `04 Consent`.
 
 ## 2. Versioning & workspaces
@@ -51,7 +51,7 @@ respect consent state natively (cookieless pings when denied).
 6. **No PII** — search the outgoing `collect` requests (DevTools → Network) for
    any name/email. Must be zero.
 7. **Cross-page regression** — legacy events (`click_cta`, `form_submit`,
-   `scroll_75`, `click_proyecto_*`) still fire.
+   `scroll_50`, `click_proyecto_*`) still fire.
 
 ## 5. Publishing rhythm
 

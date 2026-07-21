@@ -13,7 +13,7 @@ page_views alongside the GA4 tag in GTM). Verify in GTM:
 
 1. Confirm you have exactly **one** GA4 Config/Google tag in the container
    with Measurement ID `G-HV1S1BRJ8S`, firing on All Pages.
-2. Create variable `Const - GA4 Measurement ID` = `G-HV1S1BRJ8S` and point the
+2. Use the constant variable `GA4 measurement ID` = `G-HV1S1BRJ8S` and point the
    config tag (and later all event tags) at it.
 3. After deploying the code: open the site, DevTools → Network → filter
    `collect` — there must be exactly **one** `page_view` hit per page load.
@@ -28,7 +28,7 @@ For each event (`view_item_list`, `select_item`, `begin_checkout`, `sign_up`,
 1. **Trigger:** Custom Event, event name exactly as above
    (`CE - view_item_list`, etc.).
 2. **Tag:** GA4 Event tag, Event Name = same name, Measurement ID =
-   `{{Const - GA4 Measurement ID}}`.
+   `{{GA4 measurement ID}}`.
    - For the four ecommerce events: check **"Send Ecommerce data"** with
      source = Data Layer. No manual parameter mapping needed for `items[]`.
    - For `sign_up`: add event parameter `plan_id` → new variable

@@ -133,6 +133,38 @@ contenedor. Todo lo demás es deuda técnica de medición.
 
 ---
 
+## Bug #5 — Página sin etiquetar detectada por "Cobertura de la etiqueta"
+
+### Síntoma
+El panel de diagnóstico de GA4 marcaba la cuenta como **"Urgente"** con el
+aviso *"Algunas de tus páginas no están etiquetadas"*. En **Administrar →
+Cobertura de la etiqueta**, de 7 páginas incluidas, 1 aparecía **Sin
+etiquetar**: `/portfolio-analytics/Proyecto-2/`.
+
+### Diagnóstico
+La página de evidencia del Proyecto 2 (`Proyecto-2/index.html`) nunca tuvo
+instalado el snippet de GTM. Al ampliar el sitio con el journey de TechFlow se
+etiquetaron todas las páginas nuevas, pero esta quedó como punto ciego: GA4 no
+media sus visitas y el reporte de cobertura la señalaba. No afectaba a los
+eventos del funnel (esa página no dispara ninguno), pero sí dejaba un hueco en
+la medición y disparaba la alerta de calidad del contenedor.
+
+### Solución
+1. Se añadió a `Proyecto-2/index.html` el mismo bloque que el resto de páginas:
+   defaults de Consent Mode v2 → snippet de GTM en `<head>` → `noscript` en
+   `<body>` → banner de consentimiento (`js/consent.js`).
+2. La alerta de cobertura se re-evalúa sola en el siguiente rastreo (24–48 h);
+   no se usó la opción de "ignorar", porque etiquetar la página era la
+   corrección correcta, no silenciar el aviso.
+
+### Aprendizaje
+El reporte de **Cobertura de la etiqueta** es la forma de encontrar páginas
+huérfanas que no envían datos. Al expandir un sitio, cada página nueva debe
+llevar el contenedor: una sola URL sin etiquetar es suficiente para bajar la
+calidad de la medición y generar lagunas difíciles de detectar después.
+
+---
+
 ## Herramienta principal de debugging: GTM Preview Mode
 
 ![GTM Preview Mode](preview-mode.png)
@@ -148,8 +180,10 @@ Es la primera herramienta a usar ante cualquier problema de tracking.
 
 ## Conclusión
 
-Los 3 bugs documentados reflejan errores comunes en implementaciones
-reales de GTM + GA4. El patrón de solución siempre sigue este orden:
+Los 5 bugs documentados reflejan errores comunes en implementaciones
+reales de GTM + GA4: desde confusión con herramientas de verificación hasta
+doble instalación de GA4 y páginas huérfanas sin etiquetar. El patrón de
+solución siempre sigue este orden:
 
 1. Verificar recolección (GTM Preview Mode)
 2. Verificar recepción (GA4 Tiempo Real)  

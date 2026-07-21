@@ -18,7 +18,7 @@ Home → Precios → Registro (2 pasos) → Gracias
 ```
 
 Built on GA4 recommended events with a full `items[]` ecommerce schema, plus
-the original legacy events (`click_cta`, `form_submit`, `scroll_75`,
+the original legacy events (`click_cta`, `form_submit`, `scroll_50`,
 `click_proyecto_1/2/3`) kept for historical continuity.
 
 ## What's inside
@@ -27,7 +27,10 @@ the original legacy events (`click_cta`, `form_submit`, `scroll_75`,
 Multi-page simulated SaaS with a complete acquisition funnel wired through the
 dataLayer: pricing list impressions, plan selection, two-step signup and a
 deduplicated simulated purchase. Consent Mode v2 with a functional banner
-(defaults denied, update on choice, persisted).
+(defaults denied, update on choice, persisted). The pages are built out like a
+real product site — illustrated hero, social proof, product tour, comparison
+table, testimonials and FAQ — so engagement signals like scroll depth reflect
+genuine interaction rather than firing on a one-screen page.
 
 **[2 — GA4: key events, custom dimensions & funnel](https://damondrc.github.io/portfolio-analytics/Proyecto-2/)**
 GA4 property configuration: key events, event-scoped custom dimensions
@@ -38,6 +41,16 @@ Real errors found during implementation — including a duplicate gtag.js + GTM
 installation double-counting page_views — each with diagnosis, fix and
 validation via GTM Preview Mode and GA4 DebugView.
 
+## Keeping the demo populated
+
+[`bot/`](bot/) — a **synthetic traffic simulator** (Playwright + GitHub
+Actions) that walks the real published journey once a day, accepting the
+consent banner so hits flow through the actual GTM → Consent → GA4 pipeline.
+It randomizes plan choice, consent and abandon point to produce a funnel with
+realistic drop-off. It's synthetic traffic on a demo site, documented as such —
+its purpose is to prove the measurement pipeline captures a full funnel end to
+end without relying on manual visits.
+
 ## Docs
 
 - [Measurement Plan](docs/MEASUREMENT_PLAN.md) — objectives → KPIs → event
@@ -46,12 +59,14 @@ validation via GTM Preview Mode and GA4 DebugView.
   versioning, QA checklist.
 - [GTM Setup Guide](docs/GTM_SETUP_GUIDE.md) — container configuration steps
   matched to each release phase.
+- [Traffic simulator](bot/README.md) — how the synthetic-traffic bot works.
 - [`gtm/`](gtm/) — versioned container exports.
 
 ## Stack
 
 Google Tag Manager · Google Analytics 4 · Consent Mode v2 · dataLayer /
-ecommerce schema · HTML/CSS/JS · GitHub Pages
+ecommerce schema · GA4 Explorations (funnel) · Playwright · GitHub Actions ·
+HTML/CSS/JS · GitHub Pages
 
 ## Roadmap
 

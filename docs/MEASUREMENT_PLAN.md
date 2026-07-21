@@ -1,6 +1,6 @@
 # Measurement Plan — TechFlow (Simulated SaaS)
 
-**Version:** 1.0 · **Owner:** Damond Rivera · **Last updated:** 2026-07
+**Version:** 1.1 · **Owner:** Damond Rivera · **Last updated:** 2026-07
 **Property:** GA4 `G-HV1S1BRJ8S` · **Container:** GTM `GTM-NHRCHKWS`
 **Environment:** GitHub Pages (static) · Consent Mode v2 enabled
 
@@ -21,7 +21,7 @@ would need.
 | Acquire trial signups | How many visitors start a trial? | Signup conversion rate |
 | Understand plan preference | Which plan attracts the most interest? | `select_item` share by plan |
 | Optimize the signup flow | Where do users abandon the flow? | Funnel step completion % |
-| Qualify demand | How engaged are visitors before converting? | Scroll 75% rate, CTA CTR |
+| Qualify demand | How engaged are visitors before converting? | Scroll 50% rate, CTA CTR |
 
 ## 2. User journey & funnel
 
@@ -54,7 +54,7 @@ queries this property by event name).
 |---|---|---|
 | `click_cta` | Click on `#btn-cta` | Home |
 | `form_submit` | Submit of `#signup-form` | Home |
-| `scroll_75` | Scroll depth ≥ 75% | Home |
+| `scroll_50` | Scroll depth ≥ 50% | Home |
 | `click_proyecto_1/2/3` | Click on portfolio cards | Portfolio landing |
 
 ### 3.2 Ecommerce / recommended events (v1.0)
@@ -116,8 +116,18 @@ reporting.
 Marked as key events: `sign_up`, `purchase`, `generate_lead`, plus legacy
 `form_submit`.
 
-## 7. Change log
+## 7. Data generation
+
+To keep the funnel populated without relying on manual visits, a synthetic
+traffic simulator ([`bot/`](../bot/), Playwright + GitHub Actions) walks the
+published journey daily. It accepts the consent banner so events flow through
+the real GTM → Consent → GA4 pipeline, and randomizes plan choice, consent and
+abandon point to reproduce realistic drop-off. This is synthetic traffic on a
+demo property, documented as such; it does not represent organic engagement.
+
+## 8. Change log
 
 | Version | Date | Change |
 |---|---|---|
+| 1.1 | 2026-07 | Corrected legacy scroll event name to `scroll_50` (matches the container). Expanded the site pages so scroll depth reflects real engagement. Added the synthetic traffic simulator as data source (§7). |
 | 1.0 | 2026-07 | Initial plan. Multi-page journey, ecommerce schema, Consent Mode v2, removal of duplicate gtag.js install (see Proyecto-3, Bug #4). |
