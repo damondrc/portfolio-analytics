@@ -1,0 +1,34 @@
+name: Traffic Simulator
+
+# Genera tráfico sintético en la demo TechFlow para poblar GA4.
+# - Programado: una vez al día (con jitter interno de 1–3 sesiones).
+# - Manual: botón "Run workflow" en la pestaña Actions.
+on:
+  schedule:
+    # 14:07 UTC diario. Nota: los cron de Actions pueden retrasarse en
+    # horas pico y se desactivan tras 60 días sin actividad en el repo.
+    - cron: '7 14 * * *'
+  workflow_dispatch:
+
+jobs:
+  simulate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: bot
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Instalar navegador Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Ejecutar simulador
+        run: node traffic-sim.mjs

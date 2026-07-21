@@ -1,0 +1,13 @@
+{
+  "name": "techflow-traffic-sim",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Generador de tráfico sintético para la demo TechFlow (Playwright).",
+  "scripts": {
+    "start": "node traffic-sim.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.45.0"
+  }
+}
