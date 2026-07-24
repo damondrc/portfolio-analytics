@@ -7,11 +7,13 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', sans-serif; background: #f4f6fb; color: #1a1a1a; padding: 40px 20px; }
+    .wrap { max-width: 960px; margin: 0 auto; }
     h1 { color: #0f62fe; margin-bottom: 10px; }
-    p { color: #555; margin-bottom: 40px; }
+    .intro { color: #555; margin-bottom: 40px; }
     .img-block { background: white; border-radius: 10px; padding: 24px; margin-bottom: 32px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
-    .img-block h2 { margin-bottom: 16px; font-size: 1.1rem; }
-    img { width: 100%; border-radius: 6px; border: 1px solid #e0e0e0; }
+    .img-block h2 { margin-bottom: 8px; font-size: 1.1rem; }
+    .img-block .cap { color: #667085; font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px; }
+    img { width: 100%; height: auto; border-radius: 6px; border: 1px solid #e0e0e0; display: block; }
     .back { display: inline-block; margin-bottom: 32px; color: #0f62fe; text-decoration: none; font-size: 0.9rem; }
     .back:hover { text-decoration: underline; }
   </style>
@@ -43,23 +45,42 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <a class="back" href="../index.html">← Volver al portafolio</a>
-  <h1>Proyecto 2 — GA4 + Conversiones + Funnel</h1>
-  <p>Evidencia de la configuración de Google Analytics 4 conectado vía GTM.</p>
+  <div class="wrap">
+    <a class="back" href="../index.html">← Volver al portafolio</a>
+    <h1>Proyecto 2 — GA4 + Conversiones + Funnel</h1>
+    <p class="intro">Evidencia de la propiedad GA4 conectada vía GTM: eventos
+    ecommerce del journey completo, conversiones marcadas como eventos clave y
+    el funnel de adquisición de 6 pasos construido en Explorations.</p>
 
-  <div class="img-block">
-    <h2>1. Eventos en tiempo real</h2>
-    <img src="realtime con eventos.png" alt="Eventos en tiempo real" />
-  </div>
+    <div class="img-block">
+      <h2>1. Eventos y conversiones en tiempo real</h2>
+      <p class="cap">El informe en tiempo real muestra el journey de TechFlow
+      enviando datos a GA4: <code>page_view</code>, <code>scroll_50</code>,
+      <code>begin_checkout</code> y <code>generate_lead</code> entre los eventos,
+      y <code>click_cta</code>, <code>generate_lead</code>, <code>purchase</code>
+      y <code>sign_up</code> registrados como eventos clave (conversiones).</p>
+      <img src="realtime-eventos.jpg" alt="Resumen en tiempo real de GA4 con eventos ecommerce y eventos clave" />
+    </div>
 
-  <div class="img-block">
-    <h2>2. Eventos clave configurados</h2>
-    <img src="Eventos clave configurados.png" alt="Eventos clave configurados" />
-  </div>
+    <div class="img-block">
+      <h2>2. Eventos clave (conversiones) configurados</h2>
+      <p class="cap">Catálogo de eventos de la propiedad
+      (Administrar → Visualización de datos → Eventos), con los legacy y los
+      nuevos de ecommerce recibidos. Marcados como eventos clave con estrella:
+      <code>click_cta</code>, <code>form_submit</code>, <code>generate_lead</code>,
+      <code>sign_up</code> y <code>purchase</code>.</p>
+      <img src="key-events.jpg" alt="Lista de eventos de GA4 con los eventos clave marcados con estrella" />
+    </div>
 
-  <div class="img-block">
-    <h2>3. Funnel de conversión</h2>
-    <img src="Funnel configurado.png" alt="Funnel de conversión" />
+    <div class="img-block">
+      <h2>3. Funnel de conversión de 6 pasos (desglose por plan)</h2>
+      <p class="cap">Exploración de embudo en GA4:
+      Home → Ver planes → Elegir plan → Iniciar registro → Cuenta creada →
+      Conversión. Embudo cerrado con tiempo transcurrido entre pasos y desglose
+      por la dimensión personalizada <code>Plan ID</code>, que revela el abandono
+      real en cada etapa del journey.</p>
+      <img src="funnel-conversion.jpg" alt="Exploración de embudo de 6 pasos en GA4 con desglose por Plan ID" />
+    </div>
   </div>
 
   <script src="../js/consent.js"></script>
