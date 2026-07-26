@@ -165,6 +165,99 @@ calidad de la medición y generar lagunas difíciles de detectar después.
 
 ---
 
+## Bug #6 — Evento fantasma: un tag de GA4 emitiendo su propio nombre como evento
+
+### Síntoma
+El reporte automatizado semanal ([`ga4-reporting-automation`](https://github.com/damondrc/ga4-reporting-automation))
+extrae el ranking de eventos vía GA4 Data API. En el informe del **20 de julio de 2026**
+apareció, en segunda posición, un "evento" que no existe en el Measurement Plan:
+
+```
+eventName,eventCount
+page_view,281
+Tag - GA4 Config,274     <-- no está en el diccionario de eventos
+scroll_50,233
+scroll,157
+form_submit,151
+```
+
+`Tag - GA4 Config` no es un nombre de evento: es el **nombre de una etiqueta del
+contenedor GTM**, siguiendo la convención `Tag - <descripción>` definida en
+[GTM_GOVERNANCE.md](../docs/GTM_GOVERNANCE.md). Un nombre de tag no debe aparecer
+nunca como valor de la dimensión `eventName` en GA4.
+
+### Diagnóstico
+
+**1. No era un pico aislado.** Revisando el histórico de las corridas automatizadas
+del reporte, el evento estaba presente desde la primera extracción y su conteo
+crecía en paralelo al de `page_view`:
+
+| Corrida | `page_view` | `Tag - GA4 Config` | Ratio |
+|---|---|---|---|
+| 2026-07-04 | 2 | 3 | 1.500 |
+| 2026-07-06 | 268 | 264 | 0.985 |
+| 2026-07-13 | 280 | 273 | 0.975 |
+| 2026-07-20 | 281 | 274 | 0.975 |
+
+Evidencia en crudo: [`evidencia/bug06_serie_corridas.csv`](evidencia/bug06_serie_corridas.csv)
+y [`evidencia/bug06_top_events_2026-07-20.csv`](evidencia/bug06_top_events_2026-07-20.csv).
+
+**2. La proporción es la pista.** Un ratio estable de ~0.98 respecto a `page_view`
+significa que el evento se dispara **una vez por carga de página**, es decir, con el
+mismo trigger que la configuración de GA4. No es un evento de interacción: es un
+duplicado estructural del `page_view`.
+
+**3. Causa raíz.** En el contenedor existía una etiqueta de tipo **GA4 Event**
+(`gaawe`) cuyo campo *Event Name* había quedado con el nombre de la propia
+etiqueta, `Tag - GA4 Config`, en lugar de un nombre de evento válido. Estaba
+asignada a un trigger que se ejecuta en cada carga de página (de ahí el ratio
+~1:1 con `page_view`). GTM la ejecutaba en cada carga junto al tag de
+configuración, y GA4 la registraba como un evento más, sin forma de distinguirla
+de uno legítimo.
+
+**4. Impacto en los datos.**
+- Inflaba `eventCount` en ~274 eventos sobre la ventana de 28 días (≈17 % del total).
+- Contaminaba el informe de *Top events*, desplazando eventos reales del ranking.
+- Cualquier métrica derivada de "eventos por sesión" quedaba sobreestimada.
+- **No** afectaba a sesiones, usuarios ni al funnel de ecommerce: el evento fantasma
+  no participa de ningún paso del embudo ni está marcado como evento clave.
+
+### Solución
+1. Se desactivó la etiqueta en el contenedor GTM y se publicó una versión nueva.
+2. Se exportó el contenedor corregido a [`gtm/container-export.json`](../gtm/container-export.json).
+3. Se añadió una validación al [Measurement Plan](../docs/MEASUREMENT_PLAN.md):
+   todo `eventName` observado en GA4 debe existir en el diccionario de eventos;
+   cualquier valor fuera del diccionario se trata como defecto de implementación.
+4. **Los datos históricos no se corrigen.** GA4 no permite borrar eventos ya
+   recolectados y los data filters no son retroactivos. El evento fantasma
+   permanece en el histórico y seguirá apareciendo en la ventana móvil de 28 días
+   del reporte hasta aproximadamente el **17 de agosto de 2026**.
+5. Como siguiente paso (Bloque B), en `ga4-reporting-automation` se excluirá el
+   evento explícitamente vía `FilterExpression` en la query, con un comentario que
+   documente qué se excluye, desde cuándo dejó de generarse y por qué el filtro es
+   temporal. Hasta que ese cambio esté implementado, el evento sigue apareciendo en
+   el ranking del reporte.
+
+### Aprendizaje
+El hallazgo no vino de una revisión manual del contenedor, sino de la **capa de
+reporting**: fue el pipeline automatizado el que expuso un defecto de la capa de
+recolección que llevaba semanas activo y que no generaba ninguna alerta en GA4.
+
+De ahí dos reglas que incorporo al proceso:
+
+- **El diccionario de eventos es un contrato verificable, no documentación.** Si
+  GA4 devuelve un `eventName` que no está en el Measurement Plan, es un bug —
+  aunque el dato "se vea bien" en los informes.
+- **Un evento cuyo conteo es proporcional a `page_view` casi nunca mide una
+  interacción.** La proporción entre eventos es una herramienta de diagnóstico
+  tan válida como el Preview Mode, y es la única que funciona de forma retroactiva
+  sobre datos ya recolectados.
+
+Es también la razón de ser del reporting automatizado: no solo comunica métricas,
+sino que actúa como control de calidad continuo sobre la implementación.
+
+---
+
 ## Herramienta principal de debugging: GTM Preview Mode
 
 ![GTM Preview Mode](preview-mode.png)
@@ -180,9 +273,12 @@ Es la primera herramienta a usar ante cualquier problema de tracking.
 
 ## Conclusión
 
-Los 5 bugs documentados reflejan errores comunes en implementaciones
-reales de GTM + GA4: desde confusión con herramientas de verificación hasta
-doble instalación de GA4 y páginas huérfanas sin etiquetar. El patrón de
+Los 6 bugs documentados reflejan errores comunes en implementaciones reales de
+GTM + GA4: desde confusión con herramientas de verificación hasta doble
+instalación de GA4, páginas huérfanas sin etiquetar y un evento fantasma
+generado por una etiqueta mal configurada. Los cinco primeros se detectaron
+durante la implementación; el sexto lo detectó el pipeline de reporting semanas
+después, lo que cierra el ciclo entre recolección y análisis. El patrón de
 solución siempre sigue este orden:
 
 1. Verificar recolección (GTM Preview Mode)

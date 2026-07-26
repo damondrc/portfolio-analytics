@@ -101,6 +101,9 @@ These must be registered in GA4 (Admin → Custom definitions) to be reportable:
   are used verbatim when one exists — never invent a synonym for a standard event.
 - **Parameters:** `snake_case`, no PII ever (no names, emails, phone numbers).
 - **GTM assets:** see [GTM_GOVERNANCE.md](GTM_GOVERNANCE.md).
+- **Validation:** the event dictionary above is a contract. Any `eventName`
+  observed in GA4 that is not listed here is an implementation defect, not a
+  new event — see Proyecto-3, Bug #6.
 
 ## 5. Consent
 
@@ -125,9 +128,21 @@ the real GTM → Consent → GA4 pipeline, and randomizes plan choice, consent a
 abandon point to reproduce realistic drop-off. This is synthetic traffic on a
 demo property, documented as such; it does not represent organic engagement.
 
+Synthetic traffic enters tagged as `utm_source=traffic-sim` /
+`utm_medium=synthetic`, so it stays separable from real visits in every report
+(only the landing navigation carries the parameters; tagging internal
+navigations would split the session and break the funnel).
+
+Development traffic from my own devices is separated via a GA4 internal traffic
+rule (IP-based) plus a data filter validated in test mode before activation. The
+filter is not retroactive: sessions recorded before it was enabled — notably the
+2026-07-04 implementation spike (≈86% of the early historical traffic) — remain
+in the historical data.
+
 ## 8. Change log
 
 | Version | Date | Change |
 |---|---|---|
+| 1.2 | 2026-07 | Added dictionary validation rule (§4) after a phantom event reached production undetected (Proyecto-3, Bug #6). Synthetic traffic now enters tagged with `utm_source=traffic-sim` (§7). |
 | 1.1 | 2026-07 | Corrected legacy scroll event name to `scroll_50` (matches the container). Expanded the site pages so scroll depth reflects real engagement. Added the synthetic traffic simulator as data source (§7). |
 | 1.0 | 2026-07 | Initial plan. Multi-page journey, ecommerce schema, Consent Mode v2, removal of duplicate gtag.js install (see Proyecto-3, Bug #4). |

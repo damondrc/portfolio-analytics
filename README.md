@@ -49,7 +49,9 @@ consent banner so hits flow through the actual GTM → Consent → GA4 pipeline.
 It randomizes plan choice, consent and abandon point to produce a funnel with
 realistic drop-off. It's synthetic traffic on a demo site, documented as such —
 its purpose is to prove the measurement pipeline captures a full funnel end to
-end without relying on manual visits.
+end without relying on manual visits. Sessions enter tagged as
+`utm_source=traffic-sim / utm_medium=synthetic`, so synthetic traffic stays
+separable from real visits in every report.
 
 ## Docs
 
@@ -83,7 +85,10 @@ portfolio builds on what it collects:
   funnel analysis with SQL + Tableau on GA4-style event data (simulated at scale).
 - **[ga4-reporting-automation](https://github.com/damondrc/ga4-reporting-automation)** —
   automated weekly reporting pulling **this property's real data** via the GA4
-  Data API and GitHub Actions. Event additions here are propagated additively
-  to its queries (legacy event names are never renamed).
+  Data API and GitHub Actions. Contract between the two repos: event names
+  defined here are **append-only** — legacy names are never renamed or reused,
+  so downstream queries only ever require additive changes and historical series
+  stay comparable. Its reporting was also what surfaced
+  [Bug #6](Proyecto-3/README.md): a phantom event invisible from GA4's own UI.
 
 *Collection → Analysis → Activation.*

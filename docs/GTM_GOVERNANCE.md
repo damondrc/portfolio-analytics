@@ -52,6 +52,9 @@ respect consent state natively (cookieless pings when denied).
    any name/email. Must be zero.
 7. **Cross-page regression** — legacy events (`click_cta`, `form_submit`,
    `scroll_50`, `click_proyecto_*`) still fire.
+8. **No phantom events** — in GA4 DebugView, every `eventName` received must
+   exist in the Measurement Plan dictionary. A tag name appearing as an event
+   name means the *Event Name* field was left holding the tag's own name.
 
 ## 5. Publishing rhythm
 
