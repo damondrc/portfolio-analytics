@@ -33,6 +33,15 @@ npx playwright install chromium
 node traffic-sim.mjs
 ```
 
+## Trazabilidad
+
+Cada sesión entra por una URL etiquetada
+(`utm_source=traffic-sim`, `utm_medium=synthetic`, `utm_campaign=portfolio-demo`).
+Solo la navegación de aterrizaje lleva los parámetros — GA4 abre una sesión
+nueva cuando la campaña cambia a mitad del recorrido, así que etiquetar las
+navegaciones internas partiría el embudo. Los eventos en sí son idénticos a los
+de un visitante humano; lo que los identifica es la fuente declarada.
+
 ## Nota
 
 Es tráfico sintético sobre un sitio de portafolio propio y simulado, y está

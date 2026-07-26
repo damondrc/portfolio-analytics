@@ -1,0 +1,10 @@
+node_modules/
+sim-history.json
+package-lock.json
+__test_hist.json
+
+# Herramientas locales (no se versionan)
+local-sim.mjs
+run-local.bat
+LOCAL.md
+*.pbix

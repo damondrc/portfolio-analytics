@@ -4,8 +4,13 @@
  * Recorre el journey real publicado en GitHub Pages con un navegador
  * headless (Playwright). Acepta el banner de Consent Mode v2 para que
  * los hits fluyan por el pipeline real GTM -> Consent -> GA4, igual
- * que un visitante humano. No usa Measurement Protocol: los eventos
- * son indistinguibles de tráfico orgánico salvo por el origen.
+ * que un visitante humano. No usa Measurement Protocol.
+ *
+ * Trazabilidad: cada sesión entra con `utm_source=traffic-sim` y
+ * `utm_medium=synthetic`, de modo que el tráfico sintético queda
+ * segmentable y separable del tráfico real en cualquier informe.
+ * Los eventos son técnicamente idénticos a los de un visitante humano;
+ * lo que los distingue es la fuente, declarada de forma explícita.
  *
  * Aleatoriedad: cada ejecución simula 1–2 sesiones. Cada sesión usa
  * un contexto nuevo (cliente/usuario GA4 distinto), elige un plan con
@@ -23,6 +28,24 @@ import { chromium } from 'playwright';
 
 const BASE = 'https://damondrc.github.io/portfolio-analytics/Proyecto-1';
 const HOME = `${BASE}/index.html`;
+
+// ---- identificación del tráfico sintético ----
+// El bot entra siempre con UTMs propias. Esto NO es para simular una campaña:
+// es para que el tráfico sintético quede aislado en una fuente/medio exclusivos
+// y cualquier informe pueda separarlo del tráfico real con un solo filtro
+// (`sessionSource = traffic-sim`). Sin esto todo cae en `(direct)/(none)`,
+// mezclado con las visitas humanas e imposible de distinguir después.
+//
+// Las UTMs van SOLO en la navegación de entrada. GA4 reinicia la sesión cuando
+// detecta un cambio de campaña a mitad del recorrido, así que etiquetar las
+// navegaciones internas rompería el embudo en varias sesiones.
+const UTM = new URLSearchParams({
+  utm_source: 'traffic-sim',
+  utm_medium: 'synthetic',
+  utm_campaign: 'portfolio-demo',
+}).toString();
+
+const HOME_ENTRY = `${HOME}?${UTM}`;
 
 // ---- utilidades de aleatoriedad ----
 const rnd = (min, max) => Math.random() * (max - min) + min;
@@ -97,8 +120,8 @@ async function runSession(browser, i) {
   try {
     log(`plan=${plan} consent=${acceptConsent ? 'accept' : 'reject'}`);
 
-    // --- Home ---
-    await page.goto(HOME, { waitUntil: 'networkidle', timeout: 30000 });
+    // --- Home (única navegación con UTMs: define la fuente de la sesión) ---
+    await page.goto(HOME_ENTRY, { waitUntil: 'networkidle', timeout: 30000 });
     await handleConsent(page, acceptConsent);
     await dwell();
     // scroll parcial para que scroll_50 dispare en algunas sesiones
