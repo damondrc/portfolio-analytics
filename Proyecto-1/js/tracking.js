@@ -66,17 +66,27 @@
       });
     },
 
-    /** precios.html: clic en "Elegir plan" (antes de navegar) */
-    selectPlan: function (planKey) {
+    /**
+     * precios.html: clic en "Elegir plan" (antes de navegar).
+     *
+     * `onSent` se pasa a GTM como `eventCallback`: GTM lo invoca cuando las
+     * etiquetas del evento ya se dispararon, de modo que la navegación puede
+     * esperar a la confirmación en lugar de a un retardo fijo. `eventTimeout`
+     * garantiza que el callback se ejecute igualmente si alguna etiqueta no
+     * responde. Ver Proyecto-3, Bug #7.
+     */
+    selectPlan: function (planKey, onSent) {
       var it = planItem(planKey);
-      if (!it) return;
+      // Si el plan no existe no hay evento que enviar, pero la navegación no
+      // debe quedarse colgada esperando un callback que nunca llegará.
+      if (!it) { if (onSent) onSent(); return; }
       it.item_list_id = LIST.item_list_id;
       it.item_list_name = LIST.item_list_name;
       pushEcommerce('select_item', {
         item_list_id: LIST.item_list_id,
         item_list_name: LIST.item_list_name,
         items: [it]
-      });
+      }, onSent ? { eventCallback: onSent, eventTimeout: 1200 } : null);
     },
 
     /** registro.html: al cargar con ?plan= */

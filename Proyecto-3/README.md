@@ -258,6 +258,101 @@ sino que actúa como control de calidad continuo sobre la implementación.
 
 ---
 
+## Bug #7 — Evento perdido en la navegación: `select_item` sub-registrado
+
+### Síntoma
+Al añadir el embudo al reporte automatizado, el paso 2 resultó **menor que el
+paso 3**, algo imposible en un funnel real: no se puede iniciar el registro sin
+haber elegido antes un plan.
+
+| Paso del journey | Evento | Conteo (28 días) |
+|---|---|---|
+| 1. Ver planes | `view_item_list` | 47 |
+| 2. Elegir plan | `select_item` | **7** |
+| 3. Iniciar registro | `begin_checkout` | **33** |
+| 4. Crear cuenta | `sign_up` | 17 |
+| 5. Conversión | `purchase` | 18 |
+
+`begin_checkout` se dispara al cargar `registro.html`, y a esa página solo se
+llega pulsando "Elegir plan". Por tanto `select_item` debería ser **como mínimo**
+igual a `begin_checkout`. Faltaba aproximadamente el 79 % de los eventos.
+
+### Diagnóstico
+
+**1. No es comportamiento de usuario, es pérdida de datos.** Los otros cuatro
+eventos del embudo se disparan en el evento `load` de su página y ninguno
+presenta anomalías. El único que se dispara **en un clic que además navega** es
+`select_item` — y es el único que falta.
+
+**2. Causa raíz: una condición de carrera con la descarga de la página.** El
+handler original empujaba el evento y navegaba tras un retardo fijo:
+
+```js
+TFTracking.selectPlan(plan);
+setTimeout(function () {
+  window.location.href = 'registro.html?plan=' + plan;
+}, 150);   // "pequeño delay para asegurar el push"
+```
+
+El `dataLayer.push()` es síncrono, pero lo que importa no es el push: es la
+petición HTTP que GTM envía a GA4 *después* de procesarlo. Ese trayecto —
+evaluar el trigger, ejecutar la etiqueta, construir y enviar el hit— no cabe de
+forma fiable en 150 ms. Cuando el navegador descarga la página, cancela las
+peticiones en vuelo y el evento se pierde. Los 7 que sí llegaron son las
+sesiones en las que la red respondió a tiempo: **un fallo intermitente, que es
+justo el que no se detecta con una prueba manual** — al probarlo en Preview Mode
+el evento aparece, porque el push ocurre siempre.
+
+**3. Por qué un retardo fijo nunca es la solución.** Subirlo a 500 ms o 1 s
+reduciría la pérdida a costa de hacer el sitio perceptiblemente más lento, y
+seguiría fallando en conexiones peores. El retardo no espera al evento: espera
+a un número inventado.
+
+### Solución
+Se sustituyó el retardo por el **`eventCallback` del dataLayer**: GTM lo invoca
+cuando las etiquetas del evento ya se dispararon, de modo que la navegación
+ocurre por confirmación y no por reloj.
+
+```js
+function go() {                       // idempotente: callback y red de
+  if (navigated) return;              // seguridad compiten por navegar
+  navigated = true;
+  window.location.href = target;
+}
+TFTracking.selectPlan(plan, go);      // -> eventCallback + eventTimeout: 1200
+setTimeout(go, 1200);                 // red de seguridad si GTM no responde
+```
+
+Tres detalles que hacen que el arreglo sea robusto:
+
+1. **`eventTimeout`** en el push: si una etiqueta no responde, GTM llama igual
+   al callback en lugar de dejarlo colgado.
+2. **Red de seguridad en la página**: si GTM está bloqueado por un ad blocker,
+   `eventCallback` no se ejecuta *nunca*. El usuario nunca debe quedar atrapado
+   por culpa de la analítica.
+3. **`go()` idempotente**: callback y red de seguridad pueden dispararse ambos;
+   la bandera evita una doble navegación.
+
+### Verificación
+El embudo del reporte semanal es la comprobación: cuando la ventana móvil de 28
+días se renueve, `select_item` debe situarse entre `view_item_list` y
+`begin_checkout`. La alerta automática de "inversión del embudo" del reporte
+—la misma que destapó este bug— dejará de dispararse.
+
+### Aprendizaje
+Cualquier evento que compita con una navegación necesita `eventCallback`; un
+`setTimeout` solo cambia la probabilidad de perderlo. Es la versión de medición
+de una condición de carrera clásica: el código "funciona" en las pruebas, falla
+en producción de forma proporcional a la latencia del usuario, y no deja ningún
+error visible.
+
+Y, de nuevo, el hallazgo llegó desde el **análisis**, no desde la
+implementación: la relación entre pasos era imposible, y esa imposibilidad
+—no una alerta de la herramienta— fue la señal. Por eso el reporte incorpora
+ahora una comprobación explícita de monotonía del embudo, y no solo gráficos.
+
+---
+
 ## Herramienta principal de debugging: GTM Preview Mode
 
 ![GTM Preview Mode](preview-mode.png)
@@ -273,13 +368,14 @@ Es la primera herramienta a usar ante cualquier problema de tracking.
 
 ## Conclusión
 
-Los 6 bugs documentados reflejan errores comunes en implementaciones reales de
+Los 7 bugs documentados reflejan errores comunes en implementaciones reales de
 GTM + GA4: desde confusión con herramientas de verificación hasta doble
-instalación de GA4, páginas huérfanas sin etiquetar y un evento fantasma
-generado por una etiqueta mal configurada. Los cinco primeros se detectaron
-durante la implementación; el sexto lo detectó el pipeline de reporting semanas
-después, lo que cierra el ciclo entre recolección y análisis. El patrón de
-solución siempre sigue este orden:
+instalación de GA4, páginas huérfanas sin etiquetar, un evento fantasma
+generado por una etiqueta mal configurada y un evento perdido por una condición
+de carrera con la navegación. Los cinco primeros se detectaron durante la
+implementación; **los dos últimos los detectó el pipeline de reporting**, semanas
+después y desde los datos, lo que cierra el ciclo entre recolección y análisis.
+El patrón de solución siempre sigue este orden:
 
 1. Verificar recolección (GTM Preview Mode)
 2. Verificar recepción (GA4 Tiempo Real)  

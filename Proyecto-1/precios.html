@@ -205,15 +205,27 @@
     // view_item_list al cargar la página de precios
     TFTracking.viewPlans();
 
-    // select_item + navegación al registro
+    // select_item + navegación al registro.
+    // La navegación espera al eventCallback de GTM (confirmación de que las
+    // etiquetas se dispararon), no a un retardo fijo: con 150 ms la petición a
+    // GA4 se cancelaba al descargarse la página y el evento se perdía.
+    // Ver Proyecto-3, Bug #7.
     document.querySelectorAll('.plan-cta').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var plan = btn.getAttribute('data-plan');
-        TFTracking.selectPlan(plan);
-        // pequeño delay para asegurar el push antes de navegar
-        setTimeout(function () {
-          window.location.href = 'registro.html?plan=' + encodeURIComponent(plan);
-        }, 150);
+        var target = 'registro.html?plan=' + encodeURIComponent(plan);
+        var navigated = false;
+
+        function go() {
+          if (navigated) return;   // el callback y la red de seguridad compiten
+          navigated = true;
+          window.location.href = target;
+        }
+
+        TFTracking.selectPlan(plan, go);
+        // Red de seguridad: si GTM está bloqueado por un ad blocker o nunca
+        // responde, el usuario no puede quedarse atrapado en la página.
+        setTimeout(go, 1200);
       });
     });
   </script>

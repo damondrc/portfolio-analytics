@@ -1,6 +1,6 @@
 # Measurement Plan — TechFlow (Simulated SaaS)
 
-**Version:** 1.1 · **Owner:** Damond Rivera · **Last updated:** 2026-07
+**Version:** 1.3 · **Owner:** Damond Rivera · **Last updated:** 2026-08
 **Property:** GA4 `G-HV1S1BRJ8S` · **Container:** GTM `GTM-NHRCHKWS`
 **Environment:** GitHub Pages (static) · Consent Mode v2 enabled
 
@@ -104,6 +104,11 @@ These must be registered in GA4 (Admin → Custom definitions) to be reportable:
 - **Validation:** the event dictionary above is a contract. Any `eventName`
   observed in GA4 that is not listed here is an implementation defect, not a
   new event — see Proyecto-3, Bug #6.
+- **Events that navigate:** any event fired on a click that also leaves the
+  page must gate the navigation on the dataLayer `eventCallback` (with
+  `eventTimeout` and a page-level fallback), never on a fixed `setTimeout`.
+  A fixed delay does not wait for the hit, it waits for a guessed number —
+  see Proyecto-3, Bug #7.
 
 ## 5. Consent
 
@@ -143,6 +148,7 @@ in the historical data.
 
 | Version | Date | Change |
 |---|---|---|
+| 1.3 | 2026-08 | Added the navigation/`eventCallback` rule (§4) after `select_item` was found under-reporting ~79% of its events (Proyecto-3, Bug #7), detected by the funnel added to the weekly report. |
 | 1.2 | 2026-07 | Added dictionary validation rule (§4) after a phantom event reached production undetected (Proyecto-3, Bug #6). Synthetic traffic now enters tagged with `utm_source=traffic-sim` (§7). |
 | 1.1 | 2026-07 | Corrected legacy scroll event name to `scroll_50` (matches the container). Expanded the site pages so scroll depth reflects real engagement. Added the synthetic traffic simulator as data source (§7). |
 | 1.0 | 2026-07 | Initial plan. Multi-page journey, ecommerce schema, Consent Mode v2, removal of duplicate gtag.js install (see Proyecto-3, Bug #4). |
