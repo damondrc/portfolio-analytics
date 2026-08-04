@@ -53,6 +53,14 @@ end without relying on manual visits. Sessions enter tagged as
 `utm_source=traffic-sim / utm_medium=synthetic`, so synthetic traffic stays
 separable from real visits in every report.
 
+## Analysis on the raw data (BigQuery)
+
+The GA4 property is linked to **BigQuery**, so every collected event lands as
+raw rows. [`sql/`](sql/) reconstructs the analysis from that event-level data:
+the funnel by step, revenue and selection share per plan (unnesting `items[]`),
+a `transaction_id` **deduplication check**, and a consent-signal split. This is
+the layer beyond what the GA4 interface reports.
+
 ## Docs
 
 - [Measurement Plan](docs/MEASUREMENT_PLAN.md) — objectives → KPIs → event
@@ -61,6 +69,7 @@ separable from real visits in every report.
   versioning, QA checklist.
 - [GTM Setup Guide](docs/GTM_SETUP_GUIDE.md) — container configuration steps
   matched to each release phase.
+- [`sql/`](sql/) — BigQuery analysis on the raw GA4 export.
 - [Traffic simulator](bot/README.md) — how the synthetic-traffic bot works.
 - [`gtm/`](gtm/) — versioned container exports.
 
