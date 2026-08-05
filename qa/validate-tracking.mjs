@@ -144,11 +144,17 @@ async function main() {
       purchasesReload === 0, `count tras reload=${purchasesReload}`);
 
     // ---------- SIGN_UP (validado en aislamiento) ----------
-    // Reabrimos registro y ABORTAMOS la navegación a gracias: así el push de
-    // sign_up queda en el dataLayer de registro y podemos leerlo (si dejáramos
-    // navegar, el dataLayer se reemplazaría por el de gracias).
+    // sign_up se empuja y, 150 ms después, la página navega a gracias.html.
+    // Leer el dataLayer "poco después del clic" es una carrera contra esa
+    // navegación: si gana la navegación, el dataLayer que se lee ya es el de
+    // la página nueva y el evento parece no haber existido nunca.
+    //
+    // En vez de intentar frenar la navegación (bloquear la request es
+    // igual de dependiente del tiempo), se despacha el submit y se lee el
+    // dataLayer DENTRO DEL MISMO evaluate: el handler empuja sign_up de forma
+    // síncrona antes de programar el setTimeout, así que en ese instante el
+    // evento ya está y la navegación todavía no ha ocurrido. Determinista.
     const p2 = await context.newPage();
-    await p2.route('**/gracias.html*', (route) => route.abort());
     await p2.goto(`${BASE}/registro.html?plan=${PLAN}`, { waitUntil: 'networkidle' });
     await p2.fill('#reg-nombre', 'QA Bot');
     await p2.fill('#reg-email', 'qa@example.com');
@@ -156,18 +162,28 @@ async function main() {
     await p2.locator('#reg-step-2').waitFor({ state: 'visible' });
     await p2.fill('#reg-empresa', 'QA Inc');
     await p2.selectOption('#reg-tamano', '6-20');
-    await p2.locator('#btn-crear-cuenta').click().catch(() => {});
-    await sleep(800);
-    const dl2 = await p2.evaluate(() => window.dataLayer || []);
-    const su = dl2.find((r) => r && r.event === 'sign_up');
+
+    const captured = await p2.evaluate(() => {
+      const dl = window.dataLayer || [];
+      const before = dl.length;
+      document.getElementById('reg-step-2').dispatchEvent(
+        new Event('submit', { bubbles: true, cancelable: true })
+      );
+      const pushed = dl.slice(before);
+      return {
+        signUp: pushed.find((r) => r && r.event === 'sign_up') || null,
+        raw: JSON.stringify(dl),
+      };
+    });
+
+    const su = captured.signUp;
     check('sign_up existe', su);
     check('sign_up · method + plan_id (sin PII)',
       su && su.method === 'landing_form' && su.plan_id === `plan_${PLAN}`,
       JSON.stringify(su));
     // el dataLayer no debe contener PII (nombre/email)
-    const raw = JSON.stringify(dl2);
     check('sin PII en el dataLayer (nombre/email)',
-      !raw.includes('qa@example.com') && !/"QA Bot"/.test(raw));
+      !captured.raw.includes('qa@example.com') && !/"QA Bot"/.test(captured.raw));
     await p2.close();
   } finally {
     await context.close();
