@@ -85,19 +85,37 @@ HTML/CSS/JS · GitHub Pages
   infrastructure (Cloud Run / Stape), out of scope for a static demo.
 - BigQuery export of the GA4 property for SQL analysis.
 
-## This property feeds my other projects
+## Part of a three-repo system
 
-The GA4 property instrumented here is a living data source — the rest of my
-portfolio builds on what it collects:
+Each repository covers one stage of the same pipeline. What they share on
+purpose is the **GA4 event schema**.
 
-- **[ecommerce-funnel-analysis](https://github.com/damondrc/ecommerce-funnel-analysis)** —
-  funnel analysis with SQL + Tableau on GA4-style event data (simulated at scale).
-- **[ga4-reporting-automation](https://github.com/damondrc/ga4-reporting-automation)** —
-  automated weekly reporting pulling **this property's real data** via the GA4
-  Data API and GitHub Actions. Contract between the two repos: event names
-  defined here are **append-only** — legacy names are never renamed or reused,
-  so downstream queries only ever require additive changes and historical series
-  stay comparable. Its reporting was also what surfaced
-  [Bug #6](Proyecto-3/README.md): a phantom event invisible from GA4's own UI.
+| Stage | Repository | Dataset |
+|---|---|---|
+| **Collection** | **this repo** — GTM + GA4 implementation, measurement plan, consent, tracking QA | Real · live · low volume |
+| **Analysis** | [ecommerce-funnel-analysis](https://github.com/damondrc/ecommerce-funnel-analysis) — SQL funnel analysis and Tableau dashboard | Simulated · 80k events |
+| **Activation** | [ga4-reporting-automation](https://github.com/damondrc/ga4-reporting-automation) — GA4 Data API → automated weekly report | Real · live |
+
+```
+                        GA4 event schema
+              ┌───────────────┴───────────────┐
+      real · live · small              simulated · at scale
+     instrumented demo site            80k generated events
+              │                                │
+      Data API ─▶ weekly report        SQL ─▶ Tableau dashboard
+```
+
+**Why two datasets.** A demo site cannot produce the volume an analysis needs
+for its findings to mean anything, and a simulated dataset cannot prove that an
+implementation works. So the live property carries the pipeline end to end, and
+the simulated one carries the analysis. Both speak the same event schema, which
+is what makes the split deliberate rather than convenient.
+
+**The contract between repos.** Event names defined here are **append-only** —
+legacy names are never renamed or reused, so downstream queries only ever
+require additive changes and historical series stay comparable. That reporting
+is also what surfaced [Bug #6 and Bug #7](Proyecto-3/README.md): two collection
+defects invisible from GA4's own interface, caught from the data rather than
+from the container.
 
 *Collection → Analysis → Activation.*
