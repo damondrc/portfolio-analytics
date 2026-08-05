@@ -1,0 +1,13 @@
+{
+  "name": "techflow-tracking-qa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Contract testing del dataLayer contra el measurement plan (Playwright).",
+  "scripts": {
+    "test": "node validate-tracking.mjs"
+  },
+  "dependencies": {
+    "playwright": "^1.45.0"
+  }
+}

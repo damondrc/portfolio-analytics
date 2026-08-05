@@ -1,0 +1,36 @@
+name: Tracking QA
+
+# Valida el contrato del dataLayer contra el measurement plan.
+# Corre en cada push y PR: si el tracking se rompe, el build falla.
+on:
+  push:
+    paths:
+      - 'Proyecto-1/**'
+      - 'js/**'
+      - 'qa/**'
+      - '.github/workflows/tracking-qa.yml'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: qa
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Instalar navegador Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Validar contrato del dataLayer
+        run: node validate-tracking.mjs
