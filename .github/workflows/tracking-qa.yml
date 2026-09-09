@@ -29,8 +29,11 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
+      # Sin --with-deps: ver la nota en traffic-sim.yml. `apt-get update` falla
+      # cuando el repositorio de Chrome del runner sirve un índice inconsistente,
+      # y la imagen ubuntu-latest ya incluye las librerías necesarias.
       - name: Instalar navegador Playwright
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Validar contrato del dataLayer
         run: node validate-tracking.mjs

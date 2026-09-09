@@ -27,8 +27,15 @@ jobs:
       - name: Instalar dependencias
         run: npm install
 
+      # Sin --with-deps a propósito: esa opción lanza `apt-get update`, que en
+      # el runner incluye el repositorio de Google Chrome. Cuando ese repo
+      # sirve un índice inconsistente ("Hash Sum mismatch") apt falla y el job
+      # entero se cae, aunque el navegador no tenga nada que ver.
+      # La imagen ubuntu-latest ya trae Chrome y Edge preinstalados, así que
+      # las librerías compartidas que necesita el Chromium de Playwright están
+      # presentes: solo hace falta descargar el binario.
       - name: Instalar navegador Playwright
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Ejecutar simulador
         run: node traffic-sim.mjs
