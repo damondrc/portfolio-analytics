@@ -12,7 +12,12 @@ on:
 
 jobs:
   simulate:
-    runs-on: ubuntu-latest
+    # Imagen fijada a propósito. `ubuntu-latest` migra a Ubuntu 26 el
+    # 2026-10-19; un cambio de imagen puede alterar las librerías del sistema
+    # de las que depende el Chromium de Playwright. El bot corre a diario sin
+    # supervisión: una ruptura aquí se traduce en días sin datos en GA4 antes
+    # de que alguien lo note.
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     defaults:
       run:
